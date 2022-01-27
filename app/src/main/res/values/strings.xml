@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">QR-Code-DB</string>
+    <string name="scan">Scan</string>
+    <string name="recent_scanned">Recent Scanned</string>
+    <string name="favourites">Favourites</string>
+    <string name="saved">Save Code</string>
+    <string name="about_app">About App</string>
 </resources>
