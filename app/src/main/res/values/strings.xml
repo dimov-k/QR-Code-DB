@@ -5,4 +5,6 @@
     <string name="favourites">Favourites</string>
     <string name="saved">Save Code</string>
     <string name="about_app">About App</string>
+    <string name="qr_code_scanner">QR Code DB</string>
+    <string name="by">By Nya Group</string>
 </resources>
