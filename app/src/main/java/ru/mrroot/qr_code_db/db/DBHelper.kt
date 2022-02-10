@@ -6,7 +6,7 @@ import java.util.*
 class DBHelper(var qrCodeDB: QRCodeDB) : DBHelperImpl {
     override fun insertQRCode(title: String, qrCodeValue: String, favourite: Boolean): Int {
         val dateAdded = Calendar.getInstance()
-        val qrCodeType = QRCodeTypes.UNDEFINED
+        val qrCodeType = determineQRCodeType(qrCodeValue)
         val qrCode = QRCode(
             title = title,
             qrCodeValue = qrCodeValue,
@@ -51,6 +51,15 @@ class DBHelper(var qrCodeDB: QRCodeDB) : DBHelperImpl {
 
 
     private fun determineQRCodeType(qrCodeValue: String) : Int {
-        TODO("Not yet implemented")
+        with (qrCodeValue) {
+            return when {
+                startsWith("http://") -> QRCodeTypes.URL
+                startsWith("https://") -> QRCodeTypes.URL
+                startsWith("mailto:") -> QRCodeTypes.EMAIL
+                startsWith("tel:") -> QRCodeTypes.TELEPHONE_NUMBER
+                startsWith("BEGIN:VCARD") -> QRCodeTypes.CONTACT
+                else -> QRCodeTypes.UNDEFINED
+            }
+        }
     }
 }

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:ellipsize="end"
+        android:lines="1"
+        android:textColor="@android:color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/resultTypeIcon"
+        app:layout_constraintTop_toTopOf="@+id/resultTypeIcon"
+        tools:text="Result" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/resultTypeIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_black_shape"
+        android:backgroundTint="@color/colorPrimary"
+        android:padding="15dp"
+        android:src="@drawable/ic_text_documents"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/dateAdded"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:lines="1"
+        android:textColor="@android:color/darker_gray"
+        app:layout_constraintBottom_toBottomOf="@+id/resultTypeIcon"
+        app:layout_constraintStart_toEndOf="@+id/resultTypeIcon"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        tools:text="07-11-2021 03-45AM" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/generateQRCodeButton"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_margin="50dp"
+        android:src="@drawable/generate_qr_code_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/dateAdded"
+        app:layout_constraintStart_toEndOf="@+id/dateAdded"
+        app:layout_constraintTop_toTopOf="@+id/dateAdded" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/openLinkButton"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_margin="10dp"
+        android:src="@drawable/external_link_icon"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/dateAdded"
+        app:layout_constraintStart_toEndOf="@+id/generateQRCodeButton"
+        app:layout_constraintTop_toTopOf="@+id/dateAdded" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/favouriteIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:src="@drawable/ic_star_full_yellow_24dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/dateAdded"
+        app:layout_constraintStart_toEndOf="@+id/openLinkButton"
+        app:layout_constraintTop_toTopOf="@+id/dateAdded" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/nonFavouriteIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:src="@drawable/ic_star_border_white_24dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/dateAdded"
+        app:layout_constraintStart_toEndOf="@+id/openLinkButton"
+        app:layout_constraintTop_toTopOf="@+id/dateAdded" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/lightGray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/resultTypeIcon" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

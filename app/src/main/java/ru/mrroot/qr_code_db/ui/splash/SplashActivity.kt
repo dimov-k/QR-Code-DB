@@ -73,11 +73,11 @@ class SplashActivity : AppCompatActivity() {
     private fun showGoToAppSettingsDialog() {
         AlertDialog.Builder(this, R.style.CustomAlertDialog)
             .setTitle(getString(R.string.grant_permissions))
-            .setMessage(getString(R.string.we_need_permission))
+            .setMessage(getString(R.string.permission_request_message))
             .setPositiveButton(getString(R.string.grant)) { _, _ ->
                 goToAppSettings()
             }
-            .setNegativeButton(getString(R.string.cancel)) { _, _ ->
+            .setNegativeButton(getString(R.string.refuse)) { _, _ ->
                 run {
                     finish()
                 }

@@ -7,4 +7,16 @@
     <string name="about_app">About App</string>
     <string name="qr_code_scanner">QR Code DB</string>
     <string name="by">By Nya Group</string>
+    <string name="recent_qr_codes">Recent QR Codes</string>
+    <string name="warning">Warning</string>
+    <string name="delete_single_qr_code_message">Are you sure you want to delete this QR Code?</string>
+    <string name="delete_all_qr_codes_message">Are you sure you want to delete all QR Codes?</string>
+    <string name="delete_confirm">Yes</string>
+    <string name="delete_refuse">Nope</string>
+    <string name="removed_from_favourites">QR Code has been removed from favourites</string>
+    <string name="added_to_favourites">QR Code has been added to favourites</string>
+    <string name="grant_permissions">Grant Permissions</string>
+    <string name="permission_request_message">This application requires camera permission to scan QR codes. Please proceed to App Settings and manage permissions</string>
+    <string name="grant">Grant</string>
+    <string name="refuse">Refuse</string>
 </resources>

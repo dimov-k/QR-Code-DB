@@ -3,6 +3,7 @@ package ru.mrroot.qr_code_db.ui.mainactivity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
+import kotlinx.android.synthetic.main.activity_main.*
 import ru.mrroot.qr_code_db.R
 
 class MainActivity : AppCompatActivity() {
