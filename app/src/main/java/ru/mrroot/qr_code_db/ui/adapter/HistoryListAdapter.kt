@@ -1,6 +1,8 @@
 package ru.mrroot.qr_code_db.ui.adapter
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,8 +56,14 @@ class HistoryListAdapter(
             onClick(qrCode, position)
         }
 
-       private fun onClick(qrCode: QRCode, position: Int) {
-           view.generateQRCodeButton.setOnClickListener { qrCodeDialogFragment.show(qrCode.qrCodeValue) }
+        private fun onClick(qrCode: QRCode, position: Int) {
+            view.generateQRCodeButton.setOnClickListener { qrCodeDialogFragment.show(qrCode.qrCodeValue) }
+
+            view.openLinkButton.setOnClickListener {
+                val openURL = Intent(Intent.ACTION_VIEW)
+                openURL.data = Uri.parse(qrCode.qrCodeValue)
+                context.startActivity(openURL)
+            }
 
             view.favouriteIcon.setOnClickListener {
                 dbHelperImpl.removeFromFavourites(qrCode.id!!)
@@ -64,12 +72,12 @@ class HistoryListAdapter(
                 Toast.makeText(context, R.string.removed_from_favourites, Toast.LENGTH_SHORT).show()
             }
 
-           view.nonFavouriteIcon.setOnClickListener {
-               dbHelperImpl.addToFavourites(qrCode.id!!)
-               view.nonFavouriteIcon.gone()
-               view.favouriteIcon.visible()
-               Toast.makeText(context, R.string.added_to_favourites, Toast.LENGTH_SHORT).show()
-           }
+            view.nonFavouriteIcon.setOnClickListener {
+                dbHelperImpl.addToFavourites(qrCode.id!!)
+                view.nonFavouriteIcon.gone()
+                view.favouriteIcon.visible()
+                Toast.makeText(context, R.string.added_to_favourites, Toast.LENGTH_SHORT).show()
+            }
 
             view.setOnLongClickListener {
                 showDeleteDialog(qrCode, position)
@@ -78,7 +86,8 @@ class HistoryListAdapter(
         }
 
         private fun showDeleteDialog(qrCode: QRCode, position: Int) {
-            AlertDialog.Builder(context, R.style.CustomAlertDialog).setTitle(context.getString(R.string.warning))
+            AlertDialog.Builder(context, R.style.CustomAlertDialog)
+                .setTitle(context.getString(R.string.warning))
                 .setMessage(context.getString(R.string.delete_single_qr_code_message))
                 .setPositiveButton(context.getString(R.string.delete_confirm)) { _, _ ->
                     deleteThisRecord(qrCode, position)
