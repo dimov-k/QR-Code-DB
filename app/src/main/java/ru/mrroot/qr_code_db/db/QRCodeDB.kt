@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import ru.mrroot.qr_code_db.db.QRCodeDao
+import ru.mrroot.qr_code_db.db.QRCode
 
 @Database(entities = [QRCode::class], version = 1, exportSchema = false)
 abstract class QRCodeDB : RoomDatabase() {

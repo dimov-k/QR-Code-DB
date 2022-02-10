@@ -1,17 +1,27 @@
 package ru.mrroot.qr_code_db.ui.dialogs
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.ClipData
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.provider.Settings.Global.getString
 import android.text.ClipboardManager
 import android.util.Log
 import android.widget.Toast
-import org.json.JSONObject
 import ru.mrroot.qr_code_db.R
 import ru.mrroot.qr_code_db.db.DBHelper
 import ru.mrroot.qr_code_db.db.DBHelperImpl
+import ru.mrroot.qr_code_db.db.QRCodeDB
+import ru.mrroot.qr_code_db.db.QRCode
+import ru.mrroot.qr_code_db.utils.ContentCheckUtil
+import ru.mrroot.qr_code_db.utils.ContentCheckUtil.isWebUrl
+import ru.mrroot.qr_code_db.utils.toFormattedDisplay
+import kotlinx.android.synthetic.main.layout_qr_result_show.*
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
+import org.json.JSONObject
 import java.net.URL
 
 class QrCodeResultDialog(var context: Context) {
@@ -20,7 +30,7 @@ class QrCodeResultDialog(var context: Context) {
 
     private lateinit var dbHelperI: DBHelperImpl
 
-    private var qrResult: QrResult? = null
+    private var qrResult: QRCode? = null
 
     private var onDismissListener: OnDismissListener? = null
 
@@ -31,7 +41,7 @@ class QrCodeResultDialog(var context: Context) {
 
 
     private fun init() {
-        dbHelperI = DBHelper(QrResultDataBase.getAppDatabase(context)!!)
+        dbHelperI = DBHelper(QRCodeDB.getAppDatabase(context)!!)
     }
 
     private fun initDialog() {
@@ -71,26 +81,26 @@ class QrCodeResultDialog(var context: Context) {
 
     private fun addToFavourite() {
         dialog.favouriteIcon.isSelected = true
-        dbHelperI.addToFavourite(qrResult?.id!!)
+        dbHelperI.addToFavourites(qrResult?.id!!)
     }
 
     private fun removeFromFavourite() {
         dialog.favouriteIcon.isSelected = false
-        dbHelperI.removeFromFavourite(qrResult?.id!!)
+        dbHelperI.removeFromFavourites(qrResult?.id!!)
     }
 
 
-    fun show(recentQrResult: QrResult) {
+    fun show(recentQrResult: QRCode) {
         this.qrResult = recentQrResult
-        dialog.scannedDate.text = qrResult?.calendar?.toFormattedDisplay()
-        dialog.scannedText.text = "QR Code: " + qrResult!!.result
+        dialog.scannedDate.text = qrResult?.dateAdded?.toFormattedDisplay()
+        dialog.scannedText.text = "QR Code: " + qrResult!!.qrCodeValue
         dialog.favouriteIcon.isSelected = qrResult!!.favourite
         dialog.show()
 
         // Fetch Qr code Data via api
-        val url = "https://qr-scanner-api.herokuapp.com/api/user/" + qrResult!!.result
+        val url = "https://qr-scanner-api.herokuapp.com/api/user/" + qrResult!!.qrCodeValue
         dialog.userInfo1.text = ""
-        dialog.userInfo2.text = context.getString(R.string.loading);
+        dialog.userInfo2.text = ""
         dialog.userInfo3.text = ""
         dialog.userInfo4.text = ""
 

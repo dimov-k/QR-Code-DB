@@ -14,6 +14,7 @@ import ru.mrroot.qr_code_db.db.DBHelper
 import ru.mrroot.qr_code_db.db.DBHelperImpl
 import ru.mrroot.qr_code_db.db.QRCodeDB
 import ru.mrroot.qr_code_db.ui.dialogs.QrCodeResultDialog
+import javax.xml.transform.Result
 
 class QRScannerFragment : Fragment(), ZBarScannerView.ResultHandler {
 
@@ -73,7 +74,7 @@ class QRScannerFragment : Fragment(), ZBarScannerView.ResultHandler {
     }
 
 
-    override fun handleResult(rawResult: Result?) {
+    override fun handleResult(rawResult: me.dm7.barcodescanner.zbar.Result?) {
         onQrResult(rawResult?.contents)
     }
 
