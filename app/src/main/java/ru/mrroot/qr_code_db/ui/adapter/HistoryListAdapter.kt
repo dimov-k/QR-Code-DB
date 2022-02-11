@@ -101,6 +101,7 @@ class HistoryListAdapter(
             dbHelperImpl.deleteQRCode(qrCode.id!!)
             listOfScannedResult.removeAt(position)
             notifyItemRemoved(position)
+            notifyDataSetChanged()
         }
     }
 }

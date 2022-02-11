@@ -62,8 +62,8 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginStart="10dp"
-        android:src="@drawable/external_link_icon"
-        android:visibility="gone"
+        android:src="@drawable/ic_external_link"
+
         app:layout_constraintBottom_toBottomOf="@+id/dateAdded"
         app:layout_constraintStart_toEndOf="@+id/generateQRCodeButton"
         app:layout_constraintTop_toTopOf="@+id/dateAdded" />
