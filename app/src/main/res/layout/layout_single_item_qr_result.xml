@@ -49,9 +49,9 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/generateQRCodeButton"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="50dp"
+        android:layout_width="@dimen/history_qr_code_icons_size"
+        android:layout_height="@dimen/history_qr_code_icons_size"
+        android:layout_marginStart="10dp"
         android:src="@drawable/generate_qr_code_icon"
         app:layout_constraintBottom_toBottomOf="@+id/dateAdded"
         app:layout_constraintStart_toEndOf="@+id/dateAdded"
@@ -59,9 +59,9 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/openLinkButton"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="10dp"
+        android:layout_width="@dimen/history_qr_code_icons_size"
+        android:layout_height="@dimen/history_qr_code_icons_size"
+        android:layout_marginStart="@dimen/history_qr_code_icons_margin_start"
         android:src="@drawable/ic_external_link"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/dateAdded"
@@ -69,25 +69,35 @@
         app:layout_constraintTop_toTopOf="@+id/dateAdded" />
 
     <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/editIcon"
+        android:layout_width="@dimen/history_qr_code_icons_size"
+        android:layout_height="@dimen/history_qr_code_icons_size"
+        android:layout_marginStart="@dimen/history_qr_code_icons_margin_start"
+        android:src="@drawable/ic_outline_edit_24"
+        app:layout_constraintBottom_toBottomOf="@+id/dateAdded"
+        app:layout_constraintStart_toEndOf="@+id/openLinkButton"
+        app:layout_constraintTop_toTopOf="@+id/dateAdded" />
+
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/favouriteIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="@dimen/history_qr_code_icons_margin_start"
         android:src="@drawable/ic_star_full_yellow_24dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/dateAdded"
-        app:layout_constraintStart_toEndOf="@+id/openLinkButton"
+        app:layout_constraintStart_toEndOf="@+id/editIcon"
         app:layout_constraintTop_toTopOf="@+id/dateAdded" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/nonFavouriteIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="@dimen/history_qr_code_icons_margin_start"
         android:src="@drawable/ic_star_border_white_24dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/dateAdded"
-        app:layout_constraintStart_toEndOf="@+id/openLinkButton"
+        app:layout_constraintStart_toEndOf="@+id/editIcon"
         app:layout_constraintTop_toTopOf="@+id/dateAdded" />
 
     <View

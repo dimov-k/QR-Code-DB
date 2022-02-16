@@ -14,7 +14,7 @@ class QRCodeDialogFragment(var context: Context) {
     private var dialog: Dialog = Dialog(context)
     private var qrgEncoder: QRGEncoder? = null
     private var bitmap: Bitmap? = null
-    private var qrCodeSize: Int = 300
+    private var qrCodeSize: Int = 320
 
     init {
         dialog.setContentView(R.layout.layout_generate_qr_code)
@@ -22,8 +22,8 @@ class QRCodeDialogFragment(var context: Context) {
         dialog.qrCode.setOnClickListener { dialog.dismiss() }
         val screenWidth = Resources.getSystem().displayMetrics.widthPixels
         val screenHeight = Resources.getSystem().displayMetrics.heightPixels
-        qrCodeSize = if (screenWidth > screenHeight) screenHeight - (screenHeight/10)
-                        else screenWidth - (screenWidth/10)
+        qrCodeSize = if (screenWidth > screenHeight) screenHeight - (screenHeight/10) + 20
+                        else screenWidth - (screenWidth/10) + 20
     }
 
     fun show(qrCodeValue: String?) {

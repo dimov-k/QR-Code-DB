@@ -15,16 +15,16 @@ data class QRCode (
     val id: Int? = null,
 
     @ColumnInfo(name = "Title")
-    val title: String?,
+    var title: String?,
 
     @ColumnInfo(name = "QRCodeValue")
     val qrCodeValue: String?,
 
     @ColumnInfo(name = "QRCodeType")
-    val qrCodeType: Int? = QRCodeTypes.UNDEFINED,
+    var qrCodeType: Int? = QRCodeTypes.UNDEFINED,
 
     @ColumnInfo(name = "Favourite")
-    val favourite: Boolean = false,
+    var favourite: Boolean = false,
 
     @ColumnInfo(name = "DateAdded")
     val dateAdded: Calendar

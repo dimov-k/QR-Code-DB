@@ -15,18 +15,22 @@ import ru.mrroot.qr_code_db.R
 import ru.mrroot.qr_code_db.db.DBHelperImpl
 import ru.mrroot.qr_code_db.db.QRCode
 import ru.mrroot.qr_code_db.ui.dialogs.QRCodeDialogFragment
+import ru.mrroot.qr_code_db.ui.dialogs.QRCodeEditDialogFragment
+import ru.mrroot.qr_code_db.ui.history.ScannedHistoryFragment
 import ru.mrroot.qr_code_db.utils.gone
 import ru.mrroot.qr_code_db.utils.toFormattedDisplay
 import ru.mrroot.qr_code_db.utils.visible
 
-
 class HistoryListAdapter(
     var dbHelperImpl: DBHelperImpl,
     var context: Context,
-    private var listOfScannedResult: MutableList<QRCode>
+    private var listOfScannedResult: MutableList<QRCode>,
+    var resultListType: ScannedHistoryFragment.ResultListType?
 ) :
     RecyclerView.Adapter<HistoryListAdapter.HistoryListViewHolder>() {
     private var qrCodeDialogFragment: QRCodeDialogFragment = QRCodeDialogFragment(context)
+    private var qrCodeEditDialogFragment: QRCodeEditDialogFragment =
+        QRCodeEditDialogFragment(context, dbHelperImpl)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryListViewHolder {
         return HistoryListViewHolder(
@@ -65,11 +69,25 @@ class HistoryListAdapter(
                 context.startActivity(openURL)
             }
 
+            view.editIcon.setOnClickListener {
+                qrCodeEditDialogFragment.setOnDismissListener(object :
+                    QRCodeEditDialogFragment.OnDismissListener {
+                    override fun onDismiss() {
+                        notifyItemChanged(position)
+                    }
+                })
+                qrCodeEditDialogFragment.show(qrCode)
+            }
+
             view.favouriteIcon.setOnClickListener {
                 dbHelperImpl.removeFromFavourites(qrCode.id!!)
                 view.favouriteIcon.gone()
                 view.nonFavouriteIcon.visible()
                 Toast.makeText(context, R.string.removed_from_favourites, Toast.LENGTH_SHORT).show()
+                if (resultListType == ScannedHistoryFragment.ResultListType.FAVOURITES) {
+                    listOfScannedResult.removeAt(position)
+                    notifyItemRemoved(position)
+                }
             }
 
             view.nonFavouriteIcon.setOnClickListener {
@@ -101,7 +119,6 @@ class HistoryListAdapter(
             dbHelperImpl.deleteQRCode(qrCode.id!!)
             listOfScannedResult.removeAt(position)
             notifyItemRemoved(position)
-            notifyDataSetChanged()
         }
     }
 }

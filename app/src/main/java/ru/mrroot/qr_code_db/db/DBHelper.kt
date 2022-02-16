@@ -17,6 +17,10 @@ class DBHelper(var qrCodeDB: QRCodeDB) : DBHelperImpl {
         return qrCodeDB.getQRDao().insertQRCode(qrCode).toInt()
     }
 
+    override fun editQRCode(qrCode: QRCode) {
+        qrCodeDB.getQRDao().insertQRCode(qrCode)
+    }
+
     override fun getQRCode(id: Int): QRCode {
         return qrCodeDB.getQRDao().getQRCode(id)
     }

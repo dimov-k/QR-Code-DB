@@ -19,4 +19,16 @@
     <string name="permission_request_message">This application requires camera permission to scan QR codes. Please proceed to App Settings and manage permissions</string>
     <string name="grant">Grant</string>
     <string name="refuse">Refuse</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="cancel_changes">Cancel</string>
+    <string name="tap_on_the_qr_code_to_close">Tap on the QR Code to close</string>
+    <string-array name="qr_code_types">
+        <item>Link Address</item>
+        <item>E-mail</item>
+        <item>Telephone Number</item>
+        <item>Contact</item>
+        <item>Promotion Code</item>
+        <item>Vaccine QR Code</item>
+        <item>Undefined Code</item>
+    </string-array>
 </resources>

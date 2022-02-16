@@ -19,7 +19,6 @@ import ru.mrroot.qr_code_db.utils.gone
 import ru.mrroot.qr_code_db.utils.visible
 import java.io.Serializable
 
-
 class ScannedHistoryFragment : Fragment() {
 
     enum class ResultListType : Serializable {
@@ -41,7 +40,11 @@ class ScannedHistoryFragment : Fragment() {
         resultListType = arguments?.getSerializable(ARGUMENT_RESULT_LIST_TYPE) as ResultListType
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         mView = inflater.inflate(R.layout.fragment_scanned_history, container, false)
         init()
         setSwipeRefresh()
@@ -55,14 +58,12 @@ class ScannedHistoryFragment : Fragment() {
         mView.layoutHeader.tvHeaderText.text = getString(R.string.recent_qr_codes)
     }
 
-    private fun showListOfResults() {
+    fun showListOfResults() {
         when (resultListType) {
             ResultListType.FAVOURITES -> showFavouriteResults()
             else -> showAllResults()
-
         }
     }
-
 
     private fun showAllResults() {
         val listOfAllResult = dbHelperImpl.getAllQRCodes()
@@ -87,7 +88,12 @@ class ScannedHistoryFragment : Fragment() {
     private fun initRecyclerView(listOfQrResult: List<QRCode>) {
         mView.scannedHistoryRecyclerView.layoutManager = LinearLayoutManager(context)
         mView.scannedHistoryRecyclerView.adapter =
-            HistoryListAdapter(dbHelperImpl, requireContext(), listOfQrResult.toMutableList())
+            HistoryListAdapter(
+                dbHelperImpl,
+                requireContext(),
+                listOfQrResult.toMutableList(),
+                resultListType
+            )
         showRecyclerView()
     }
 
@@ -98,7 +104,6 @@ class ScannedHistoryFragment : Fragment() {
         }
     }
 
-
     private fun onClicks() {
         mView.layoutHeader.removeAll.setOnClickListener {
             showRemoveAllScannedResultDialog()
@@ -106,7 +111,8 @@ class ScannedHistoryFragment : Fragment() {
     }
 
     private fun showRemoveAllScannedResultDialog() {
-        AlertDialog.Builder(requireContext(), R.style.CustomAlertDialog).setTitle(getString(R.string.warning))
+        AlertDialog.Builder(requireContext(), R.style.CustomAlertDialog)
+            .setTitle(getString(R.string.warning))
             .setMessage(getString(R.string.delete_all_qr_codes_message))
             .setPositiveButton(getString(R.string.delete_confirm)) { _, _ ->
                 clearAllRecords()
@@ -114,7 +120,6 @@ class ScannedHistoryFragment : Fragment() {
             .setNegativeButton(getString(R.string.delete_refuse)) { dialog, _ ->
                 dialog.cancel()
             }.show()
-
     }
 
     private fun clearAllRecords() {
@@ -139,7 +144,6 @@ class ScannedHistoryFragment : Fragment() {
     }
 
     companion object {
-
         private const val ARGUMENT_RESULT_LIST_TYPE = "ArgumentResultType"
 
         fun newInstance(screenType: ResultListType): ScannedHistoryFragment {

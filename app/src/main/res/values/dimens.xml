@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="history_qr_code_icons_margin_start">10dp</dimen>
+    <dimen name="history_qr_code_icons_size">20dp</dimen>
+    <dimen name="edit_qr_code_margins">16dp</dimen>
+</resources>
