@@ -18,6 +18,12 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    kapt {
+        arguments {
+            arg("room.schemaLocation", "$projectDir/schemas")
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -52,9 +58,8 @@ dependencies {
     implementation 'com.google.android.material:material:1.6.0-alpha01'
 
     //Room DB Library
-    def room_version = "2.1.0"
-    implementation "androidx.room:room-runtime:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-runtime:2.4.1"
+    kapt "androidx.room:room-compiler:2.4.1"
 
     //QR Code Generator
     implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.3'

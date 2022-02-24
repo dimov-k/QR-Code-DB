@@ -45,6 +45,14 @@ class DBHelper(var qrCodeDB: QRCodeDB) : DBHelperImpl {
         return qrCodeDB.getQRDao().getAllFavourites()
     }
 
+    override fun getAllQRCodesByType(qrCodeType: Int): List<QRCode> {
+        return qrCodeDB.getQRDao().getAllQRCodesByType(qrCodeType)
+    }
+
+    override fun getAllFavouritesByType(qrCodeType: Int): List<QRCode> {
+        return qrCodeDB.getQRDao().getAllQRCodesByType(qrCodeType)
+    }
+
     override fun deleteAllQRCodes() {
         return qrCodeDB.getQRDao().deleteAllQRCodes()
     }
@@ -53,6 +61,33 @@ class DBHelper(var qrCodeDB: QRCodeDB) : DBHelperImpl {
         return qrCodeDB.getQRDao().deleteAllFavourites()
     }
 
+    override fun deleteAllQRCodeTypes() {
+        return qrCodeDB.getQRTypeDao().deleteAllQRCodeTypes()
+    }
+
+    override fun getAllQRCodeTypes(): List<QRCodeType> {
+        return qrCodeDB.getQRTypeDao().getAllQRCodeTypes()
+    }
+
+    override fun deleteQRCodeType(id: Int): Int {
+        return qrCodeDB.getQRTypeDao().deleteQRCodeType(id)
+    }
+
+    override fun insertQRCodeType(qrCodeType: QRCodeType): Long {
+        return qrCodeDB.getQRTypeDao().insertQRCodeType(qrCodeType)
+    }
+
+    override fun getQRCodeTypeById(id: Int): QRCodeType {
+        return qrCodeDB.getQRTypeDao().getQRCodeTypeById(id)
+    }
+
+    override fun initializeQRCodeTypeDB(qrCodeTypes: List<QRCodeType>) {
+        return qrCodeDB.getQRTypeDao().initializeQRCodeTypeDB(qrCodeTypes)
+    }
+
+    override fun getQRCodeTypeIDByString(qrCodeTypeName: String): Int {
+        return qrCodeDB.getQRTypeDao().getQRCodeTypeIDByString(qrCodeTypeName)
+    }
 
     private fun determineQRCodeType(qrCodeValue: String) : Int {
         with (qrCodeValue) {

@@ -13,6 +13,12 @@ interface QRCodeDao {
     @Query("SELECT * FROM QRCode WHERE favourite = 1 ORDER BY dateAdded DESC")
     fun getAllFavourites(): List<QRCode>
 
+    @Query("SELECT * FROM QRCode WHERE qrCodeType = :qrCodeType")
+    fun getAllQRCodesByType(qrCodeType: Int): List<QRCode>
+
+    @Query("SELECT * FROM QRCode WHERE favourite = 1 AND qrCodeType = :qrCodeType")
+    fun getAllFavouritesByType(qrCodeType: Int): List<QRCode>
+
     @Query("DELETE FROM QRCode")
     fun deleteAllQRCodes()
 

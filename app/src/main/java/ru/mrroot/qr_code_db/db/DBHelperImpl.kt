@@ -9,6 +9,15 @@ interface DBHelperImpl {
     fun deleteQRCode(id: Int): Int
     fun getAllQRCodes(): List<QRCode>
     fun getAllFavourites(): List<QRCode>
+    fun getAllQRCodesByType(qrCodeType: Int) : List<QRCode>
+    fun getAllFavouritesByType(qrCodeType: Int) : List<QRCode>
     fun deleteAllQRCodes()
     fun deleteAllFavourites()
+    fun getAllQRCodeTypes(): List<QRCodeType>
+    fun deleteAllQRCodeTypes()
+    fun deleteQRCodeType(id: Int): Int
+    fun insertQRCodeType(qrCodeType: QRCodeType): Long
+    fun getQRCodeTypeById(id: Int): QRCodeType
+    fun initializeQRCodeTypeDB(qrCodeTypes: List<QRCodeType>)
+    fun getQRCodeTypeIDByString(qrCodeTypeName: String): Int
 }
