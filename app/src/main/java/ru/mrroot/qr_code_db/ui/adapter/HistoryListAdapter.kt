@@ -18,6 +18,7 @@ import ru.mrroot.qr_code_db.db.QRCodeType
 import ru.mrroot.qr_code_db.ui.dialogs.QRCodeDialogFragment
 import ru.mrroot.qr_code_db.ui.dialogs.QRCodeEditDialogFragment
 import ru.mrroot.qr_code_db.ui.history.ScannedHistoryFragment
+import ru.mrroot.qr_code_db.utils.ContentCheckUtil
 import ru.mrroot.qr_code_db.utils.gone
 import ru.mrroot.qr_code_db.utils.toFormattedDisplay
 import ru.mrroot.qr_code_db.utils.visible
@@ -27,7 +28,7 @@ class HistoryListAdapter(
     var context: Context,
     private var listOfScannedResult: MutableList<QRCode>,
     var resultListType: ScannedHistoryFragment.ResultListType?,
-    private var qrCodeTypes: List<QRCodeType>
+    qrCodeTypes: List<QRCodeType>
 ) :
     RecyclerView.Adapter<HistoryListAdapter.HistoryListViewHolder>() {
     private var qrCodeDialogFragment: QRCodeDialogFragment = QRCodeDialogFragment(context)
@@ -66,10 +67,8 @@ class HistoryListAdapter(
             view.generateQRCodeButton.setOnClickListener { qrCodeDialogFragment.show(qrCode.qrCodeValue) }
 
             view.openLinkButton.setOnClickListener {
-                if (qrCode.qrCodeValue.isNullOrBlank() ||
-                    !qrCode.qrCodeValue.startsWith("http://") ||
-                    !qrCode.qrCodeValue.startsWith("https://")) {
-                    Toast.makeText(context, "QR Code is not a link", Toast.LENGTH_SHORT).show()
+                if (!ContentCheckUtil.isWebUrl(qrCode.qrCodeValue)) {
+                    Toast.makeText(context, context.getString(R.string.qr_code_not_a_link_warning), Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
                 val openURL = Intent(Intent.ACTION_VIEW)

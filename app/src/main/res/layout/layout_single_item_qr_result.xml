@@ -51,7 +51,7 @@
         android:id="@+id/generateQRCodeButton"
         android:layout_width="@dimen/history_qr_code_icons_size"
         android:layout_height="@dimen/history_qr_code_icons_size"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="@dimen/history_qr_code_icons_margin_start"
         android:src="@drawable/generate_qr_code_icon"
         app:layout_constraintBottom_toBottomOf="@+id/dateAdded"
         app:layout_constraintStart_toEndOf="@+id/dateAdded"

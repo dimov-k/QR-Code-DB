@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,7 +19,6 @@ import ru.mrroot.qr_code_db.utils.gone
 import ru.mrroot.qr_code_db.utils.visible
 import java.io.Serializable
 
-
 class ScannedHistoryFragment : Fragment() {
 
     enum class ResultListType : Serializable {
@@ -26,11 +26,8 @@ class ScannedHistoryFragment : Fragment() {
     }
 
     private lateinit var mView: View
-
     private lateinit var dbHelperImpl: DBHelperImpl
-
     private var resultListType: ResultListType? = null
-
     private lateinit var qrCodeTypes: List<QRCodeType>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,13 +61,14 @@ class ScannedHistoryFragment : Fragment() {
 
     private fun initQRCodeTypes() {
         val qrCodeTypesToInitialize = listOf(
-            QRCodeType(qrCodeTypeName = "Link Address", qrCodeType = QRCodeTypes.URL),
-            QRCodeType(qrCodeTypeName = "E-mail", qrCodeType = QRCodeTypes.EMAIL),
-            QRCodeType(qrCodeTypeName = "Telephone Number", qrCodeType = QRCodeTypes.TELEPHONE_NUMBER),
-            QRCodeType(qrCodeTypeName = "Contact", qrCodeType = QRCodeTypes.CONTACT),
-            QRCodeType(qrCodeTypeName = "Promotion Code", qrCodeType = QRCodeTypes.PROMO_CODE),
-            QRCodeType(qrCodeTypeName = "Vaccine QR Code", qrCodeType = QRCodeTypes.VACCINE_QRCODE),
-            QRCodeType(qrCodeTypeName = "Undefined Code", qrCodeType = QRCodeTypes.UNDEFINED)
+            QRCodeType(qrCodeTypeName = QRCodeTypes.URL_TEXT, qrCodeType = QRCodeTypes.URL),
+            QRCodeType(qrCodeTypeName = QRCodeTypes.EMAIL_TEXT, qrCodeType = QRCodeTypes.EMAIL),
+            QRCodeType(qrCodeTypeName = QRCodeTypes.TELEPHONE_NUMBER_TEXT, qrCodeType = QRCodeTypes.TELEPHONE_NUMBER),
+            QRCodeType(qrCodeTypeName = QRCodeTypes.CONTACT_TEXT, qrCodeType = QRCodeTypes.CONTACT),
+            QRCodeType(qrCodeTypeName = QRCodeTypes.PROMO_CODE_TEXT, qrCodeType = QRCodeTypes.PROMO_CODE),
+            QRCodeType(qrCodeTypeName = QRCodeTypes.VACCINE_QRCODE_TEXT, qrCodeType = QRCodeTypes.VACCINE_QRCODE),
+            QRCodeType(qrCodeTypeName = QRCodeTypes.RESTAURANT_MENU_TEXT, qrCodeType = QRCodeTypes.RESTAURANT_MENU),
+            QRCodeType(qrCodeTypeName = QRCodeTypes.UNDEFINED_TEXT, qrCodeType = QRCodeTypes.UNDEFINED)
         )
         dbHelperImpl.initializeQRCodeTypeDB(qrCodeTypesToInitialize)
         qrCodeTypes = dbHelperImpl.getAllQRCodeTypes()
@@ -145,7 +143,7 @@ class ScannedHistoryFragment : Fragment() {
 
     private fun showResultsFilterDialogFragment() {
         val resultsFilterDialog = MaterialAlertDialogBuilder(requireContext())
-        resultsFilterDialog.setTitle("Choose QR code type to display")
+        resultsFilterDialog.setTitle(getString(R.string.filter_dialog_title))
         val items = Array(qrCodeTypes.size){""}
         for (i in items.indices) items[i] = qrCodeTypes[i].qrCodeTypeName.toString()
         val selectedIndex = 0
@@ -153,24 +151,26 @@ class ScannedHistoryFragment : Fragment() {
         resultsFilterDialog.setSingleChoiceItems( items, selectedIndex) {
                 _, which -> selectedItem = items[which]
         }
-        resultsFilterDialog.setPositiveButton("Filter") { _, _ ->
+        resultsFilterDialog.setPositiveButton(getString(R.string.filter_dialog_filter_button_text)) { dialog, _ ->
             val qrCodeTypeId = qrCodeTypes.find { it.qrCodeTypeName == selectedItem }?.qrCodeType
+            if (qrCodeTypeId == null) {
+                Toast.makeText(context, getString(R.string.qr_code_type_id_error), Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
+            }
             when (resultListType) {
-                ResultListType.FAVOURITES ->
-                    showResults(dbHelperImpl.getAllFavouritesByType(qrCodeTypeId!!))
-                else ->
-                    showResults(dbHelperImpl.getAllQRCodesByType(qrCodeTypeId!!))
+                ResultListType.FAVOURITES -> showResults(dbHelperImpl.getAllFavouritesByType(qrCodeTypeId!!))
+                else -> showResults(dbHelperImpl.getAllQRCodesByType(qrCodeTypeId!!))
             }
             mView.scannedHistoryRecyclerView.adapter?.notifyDataSetChanged()
         }
-        resultsFilterDialog.setNeutralButton("Show All") { _, _ ->
+        resultsFilterDialog.setNeutralButton(getString(R.string.filter_dialog_show_all_button_text)) { _, _ ->
             when (resultListType) {
                 ResultListType.FAVOURITES -> showResults(dbHelperImpl.getAllFavourites())
                 else -> showResults(dbHelperImpl.getAllQRCodes())
             }
             mView.scannedHistoryRecyclerView.adapter?.notifyDataSetChanged()
         }
-        resultsFilterDialog.setNegativeButton("Cancel") { dialog, _ ->
+        resultsFilterDialog.setNegativeButton(getString(R.string.filter_dialog_cancel_button_text)) { dialog, _ ->
             dialog.dismiss()
         }
         resultsFilterDialog.show()

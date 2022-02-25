@@ -47,19 +47,12 @@ class QRCodeEditDialogFragment(
         val items = Array(qrCodeTypes.size) { "" }
         for (i in items.indices) items[i] = qrCodeTypes[i].qrCodeTypeName.toString()
 
-//        ArrayAdapter.createFromResource(
-//            context, R.array.qr_code_types, android.R.layout.simple_spinner_dropdown_item
-//        )
-        ArrayAdapter(
-            context,
-            android.R.layout.simple_spinner_dropdown_item,
-            items
-        ).also { adapter ->
+        ArrayAdapter(context, android.R.layout.simple_spinner_dropdown_item, items).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinner.adapter = adapter
         }
         if (qrCodeToSave.qrCodeType == QRCodeTypes.UNDEFINED) spinner.setSelection(spinner.count - 1)
-        else spinner.setSelection(qrCodeToSave.qrCodeType!! - 1)
+            else spinner.setSelection(qrCodeToSave.qrCodeType!! - 1)
         dialog.favouriteIcon.isVisible = qrCodeToSave.favourite
         dialog.nonFavouriteIcon.isVisible = !qrCodeToSave.favourite
         dialog.show()
@@ -67,8 +60,7 @@ class QRCodeEditDialogFragment(
 
     private fun saveEdit() {
         qrCodeToSave.title = dialog.titleEdit.text.toString()
-        qrCodeToSave.qrCodeType = qrCodeTypes.find { it.qrCodeTypeName == spinner.selectedItem }?.id
-        //qrCodeToSave.qrCodeType = QRCodeTypes.getQRCodeTypeID(spinner.selectedItem.toString())
+        qrCodeToSave.qrCodeType = qrCodeTypes.find { it.qrCodeTypeName == spinner.selectedItem }?.qrCodeType
         qrCodeToSave.favourite = dialog.favouriteIcon.isVisible
         dbHelperImpl.editQRCode(qrCodeToSave)
         dialog.dismiss()
